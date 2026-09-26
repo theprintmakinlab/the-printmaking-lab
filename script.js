@@ -1,0 +1,7 @@
+const amount=document.getElementById('amount'), range=document.getElementById('range'), years=document.getElementById('years');let rate=21;
+const money=n=>new Intl.NumberFormat('en-LK',{style:'currency',currency:'LKR',maximumFractionDigits:0}).format(n);
+function update(){let p=Number(amount.value||600000),y=Number(years.value),a=p*rate/100,i=a*y;range.value=p;document.getElementById('interest').textContent=money(i);document.getElementById('principal').textContent=money(p);document.getElementById('annual').textContent=money(a);document.getElementById('total').textContent=money(p+i)}
+amount.oninput=()=>{amount.value=Math.min(5000000,Math.max(600000,Number(amount.value||600000)));update()};range.oninput=()=>{amount.value=range.value;update()};years.onchange=update;
+document.querySelectorAll('.rates button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.rates button').forEach(x=>x.classList.remove('active'));b.classList.add('active');rate=Number(b.dataset.r);update()});
+document.getElementById('menu').onclick=()=>document.getElementById('links').classList.toggle('open');
+document.getElementById('form').onsubmit=e=>{e.preventDefault();let d=new FormData(e.target);let body=encodeURIComponent(`Name: ${d.get('name')}\nCountry: ${d.get('country')}\nEmail: ${d.get('email')}\nWhatsApp / Phone: ${d.get('phone')}\nPotential investment: ${d.get('investment')}\n\nMessage:\n${d.get('message')}`);location.href=`mailto:theprintmakinlab@gmail.com?subject=Investor enquiry - The Printmaking Lab&body=${body}`};update();
